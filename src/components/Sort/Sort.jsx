@@ -3,7 +3,7 @@ import React from "react";
 function Sort({onClickSort, activeIndex}) {
     const [open, setOpen] = React.useState(false);
     
-    const list = ['популярности', 'убыванию цены', 'увеличению цены', 'алфавиту'];
+    const list = ['популярности', 'убыван цены', 'увеличению цены', 'алфавиту'];
     const selectedSortItem = list[activeIndex];
     const onClickSortItem = (index) => {
         onClickSort(index);
