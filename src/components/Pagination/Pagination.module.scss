@@ -1,0 +1,23 @@
+.Pagination {
+    display: flex;
+    justify-content: center;
+    button{
+        text-align: center;
+        padding: 5px;
+        margin-right: 10px;
+        border: 2px solid #fe5f1e;
+        border-radius: 50%;
+        background-color: #fff;
+        width: 40px;
+        height: 40px;
+        color: #fe5f1e;
+        font-size: 18px;
+        font-weight: 600;
+        transition: all 0.2s linear;
+    }
+
+    button:hover{
+        background-color: #fe5f1e;
+        color: #fff;
+    }
+}
