@@ -1,12 +1,16 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { setSortIndex } from "../../redux/slices/filterSlice";
 
 function Sort({onClickSort, activeIndex}) {
     const [open, setOpen] = React.useState(false);
     
-    const list = ['популярности', 'убыван цены', 'увеличению цены', 'алфавиту'];
+    const list = ['популярности', 'убыванию цены', 'увеличению цены', 'алфавиту'];
     const selectedSortItem = list[activeIndex];
+
+    const dispatch = useDispatch();
     const onClickSortItem = (index) => {
-        onClickSort(index);
+        dispatch(setSortIndex(index))
         setOpen(false);
     }
 
