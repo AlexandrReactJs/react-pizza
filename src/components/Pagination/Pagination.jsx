@@ -1,15 +1,19 @@
 import React from "react";
 import style from "./Pagination.module.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentPage } from "../../redux/slices/filterSlice";
+const Pagination = ({pageCount}) => {
+    const dispatch = useDispatch();
 
-const Pagination = ({pageCount, setPage}) => {
     let pages = []
+
     for(let i = 1; i <= pageCount; i++){
         pages.push(i);
     }
     return(
         <div className={style.Pagination}>
             {
-                pages.map(el => ( <button onClick = {() => {setPage(el)}}>{el}</button>))
+                pages.map(el => ( <button onClick = {() => {dispatch(setCurrentPage(el))}}>{el}</button>))
             }
         </div>
     )

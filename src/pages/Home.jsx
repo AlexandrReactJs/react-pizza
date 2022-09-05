@@ -9,33 +9,37 @@ import { searchContext } from "../App"
 import { useSelector } from "react-redux";
 
 function Home() {
+    /*     SEARCH   */
     const { searchValue} = React.useContext(searchContext);
-
+    /*   PIZZAS STATE AND JSON MAP TO JSX */
     const [items, setItems] = React.useState([]);
     const pizzas = items.map(obj => <PizzaBlock  key={obj.id} title={obj.title} price={obj.price} img={obj.imageUrl} sizes={obj.sizes} types={obj.types} />);
-
+    /*    SKELETON PRELOADER    */
     const [isLoading, setIsLoading] = React.useState(true);
     const preloader = [...new Array(10)].map((_, i) => <PizzaBlockPreloader key={i} />);
 
-    const [page, setPage] = React.useState(1);
 
+    /*  COTEGORY AND SORT   */
     const categoryActiveIndex = useSelector((state) => state.filter.categoryIndex);
     const sortActiveIndex = useSelector((state) => state.filter.sortIndex);
     const list = ['rating&order=desc', 'price&order=desc', 'price&order=asc', 'title&order=asc'];
     const selectedSortItem = list[sortActiveIndex];
 
-    let pageSize = 4;
-    let totalCountPizzas = 10;
+
+    /*   PAGINATION    */
+    let pageSize = useSelector((state) =>  state.filter.pageSize);
+    let totalCountPizzas = useSelector((state) =>  state.filter.totalPizzasCount)
     let pageCount = Math.ceil(totalCountPizzas / pageSize);
+    let currentPage = useSelector((state) => state.filter.currentPage)
 
     React.useEffect(() => {
         setIsLoading(true)
-        axios.get(`https://630b9081ed18e82516559755.mockapi.io/pizzas?page=${page}&limit=${pageSize}&${searchValue ? `search=${searchValue}` : ``}&${categoryActiveIndex > 0 ? `category=${categoryActiveIndex}` : ``}&sortBy=${selectedSortItem}`).then((response) => {
+        axios.get(`https://630b9081ed18e82516559755.mockapi.io/pizzas?page=${currentPage}&limit=${pageSize}&${searchValue ? `search=${searchValue}` : ``}&${categoryActiveIndex > 0 ? `category=${categoryActiveIndex}` : ``}&sortBy=${selectedSortItem}`).then((response) => {
             setItems(response.data);
             setIsLoading(false);
             window.scrollTo(0, 0);
         })
-    }, [selectedSortItem, searchValue, page, pageSize, categoryActiveIndex]);
+    }, [selectedSortItem, searchValue, currentPage, pageSize, categoryActiveIndex]);
 
 
     return (
@@ -52,7 +56,7 @@ function Home() {
                 }
 
             </div>
-            <Pagination pageCount={pageCount} setPage={setPage}/>
+            <Pagination pageCount={pageCount}/>
         </div>
     )
 }
