@@ -11,7 +11,8 @@ export const searchContext = React.createContext();
 
 function App() {
   const [searchValue, setSearchValue] = React.useState('');
-  
+  const [typesIndex, setTypesIndex] = React.useState(0);
+  const [pizzaSizeIndex, setPizzaSize] = React.useState(0);
   return (
     <div className="wrapper">
       <searchContext.Provider value={{ searchValue, setSearchValue}}>
@@ -19,8 +20,8 @@ function App() {
         <div className="content">
 
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/cart" element={<Cart />} />
+            <Route path="/" element={<Home pizzaSizeIndex={pizzaSizeIndex} typesIndex={typesIndex} setPizzaSize={setPizzaSize} setTypesIndex={setTypesIndex}/>} />
+            <Route path="/cart" element={<Cart pizzaSizeIndex={pizzaSizeIndex} typesIndex={typesIndex} setPizzaSize={setPizzaSize} setTypesIndex={setTypesIndex}/>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
 

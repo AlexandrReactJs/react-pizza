@@ -6,14 +6,21 @@ import PizzaBlockPreloader from "../components/PizzaBlockPreloader/PizzaBlockPre
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 import Pagination from "../components/Pagination/Pagination";
 import { searchContext } from "../App"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import qs from 'qs';
+import { setFilters } from "../redux/slices/filterSlice";
 
-function Home() {
+function Home({typesIndex, setTypesIndex, pizzaSizeIndex, setPizzaSize}) {
+    const dispatch = useDispatch();
     /*     SEARCH   */
     const { searchValue} = React.useContext(searchContext);
+
     /*   PIZZAS STATE AND JSON MAP TO JSX */
+    
     const [items, setItems] = React.useState([]);
-    const pizzas = items.map(obj => <PizzaBlock  key={obj.id} title={obj.title} price={obj.price} img={obj.imageUrl} sizes={obj.sizes} types={obj.types} />);
+    const pizzas = items.map(obj => <PizzaBlock typesIndex={typesIndex} setTypesIndex={setTypesIndex} pizzaSizeIndex = {pizzaSizeIndex} setPizzaSize={setPizzaSize} key={obj.id} id = {obj.id}  title={obj.title} price={obj.price} img={obj.imageUrl} sizes={obj.sizes} types={obj.types} />);
+   
     /*    SKELETON PRELOADER    */
     const [isLoading, setIsLoading] = React.useState(true);
     const preloader = [...new Array(10)].map((_, i) => <PizzaBlockPreloader key={i} />);
@@ -32,6 +39,20 @@ function Home() {
     let pageCount = Math.ceil(totalCountPizzas / pageSize);
     let currentPage = useSelector((state) => state.filter.currentPage)
 
+    const isMounted = React.useRef(false)
+
+    const navigate = useNavigate();
+
+    React.useEffect(() => {
+        if(window.location.search){
+            const params = qs.parse(window.location.search.substring(1));
+            dispatch(setFilters({
+                ...params
+            }))
+        }
+    }, [dispatch]);
+
+
     React.useEffect(() => {
         setIsLoading(true)
         axios.get(`https://630b9081ed18e82516559755.mockapi.io/pizzas?page=${currentPage}&limit=${pageSize}&${searchValue ? `search=${searchValue}` : ``}&${categoryActiveIndex > 0 ? `category=${categoryActiveIndex}` : ``}&sortBy=${selectedSortItem}`).then((response) => {
@@ -41,6 +62,21 @@ function Home() {
         })
     }, [selectedSortItem, searchValue, currentPage, pageSize, categoryActiveIndex]);
 
+
+    React.useEffect(() => {
+        if(isMounted.current){
+            const queryString = qs.stringify({
+                sort: sortActiveIndex,
+                categoryActiveIndex,
+                currentPage
+                
+            });
+
+            navigate(`?${queryString}`)
+        }
+
+        isMounted.current = true
+    }, [sortActiveIndex, currentPage, pageSize, categoryActiveIndex, navigate])
 
     return (
         <div className="container">
