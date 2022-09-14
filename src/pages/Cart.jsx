@@ -2,12 +2,15 @@ import React from "react";
 import { useSelector } from "react-redux";
 import {Link} from "react-router-dom";
 import CartItem from "../components/CartItem/CartItem";
+import { useDispatch } from "react-redux";
+import { clearCart } from "../redux/slices/cartSlice";
 
 
 function Cart({pizzaSizeIndex, typesIndex}) {
     const cartItems = useSelector(state => state.cart.cart);
     const totalPrice = useSelector(state => state.cart.totalPrice);
     let totalCount = cartItems.reduce((sum, item) => sum + item.count, 0);
+    const dispatch = useDispatch();
     
     return (
         <div class="container container--cart">
@@ -27,7 +30,7 @@ function Cart({pizzaSizeIndex, typesIndex}) {
                             <path d="M11.6666 9.16667V14.1667" stroke="#B6B6B6" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
                         </svg>
 
-                        <span>Очистить корзину</span>
+                        <span onClick={() => dispatch(clearCart())}>Очистить корзину</span>
                     </div>
                 </div>
                 <div class="content__items">

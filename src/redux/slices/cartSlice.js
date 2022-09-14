@@ -14,7 +14,7 @@ export const cartSlice = createSlice({
         addPizza(state, action) {
             const found = state.cart.find(item => item.id === action.payload.id && item.types === action.payload.types && item.sizes === action.payload.sizes);
             if (found) {
-                found.count ++;
+                found.count++;
             } else {
                 state.cart.push({
                     ...action.payload,
@@ -24,24 +24,40 @@ export const cartSlice = createSlice({
             state.totalPrice += action.payload.price;
 
         },
-        minusPizza (state, action) {
+        minusPizza(state, action) {
             const foundPizza = state.cart.find(item => item.id === action.payload.id && item.types === action.payload.types && item.sizes === action.payload.sizes);
             debugger;
-            if (foundPizza) {
-                foundPizza.count --;
+            if (foundPizza && foundPizza.count > 1) {
+                foundPizza.count--;
+                state.totalPrice -= action.payload.price;
             }
-            
+
         },
-        plusPizza(state, action){
+        plusPizza(state, action) {
             const foundPizza = state.cart.find(item => item.id === action.payload.id && item.types === action.payload.types && item.sizes === action.payload.sizes);
             if (foundPizza) {
-                foundPizza.count ++;
+                foundPizza.count++;
+                state.totalPrice += action.payload.price;
             }
+        },
+        removePizza(state, action) {
+
+            const foundPizza = state.cart.find(item => item.id === action.payload.id && item.types === action.payload.types && item.sizes === action.payload.sizes);
+
+            state.cart = state.cart.filter(item => item !== foundPizza)
+            state.totalPrice -= action.payload.price * foundPizza.count;
+
+
+        },
+        clearCart(state) {
+            state.cart = [];
+            state.totalPrice = 0;
         }
-    },
+
+    }
 })
 
 
-export const { addPizza, minusPizza,plusPizza } = cartSlice.actions;
+export const { addPizza, minusPizza, plusPizza, removePizza, clearCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
