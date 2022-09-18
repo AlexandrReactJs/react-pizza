@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addPizza } from "../../redux/slices/cartSlice";
 
 function PizzaBlock({id, title, price, img, sizes, types, pizzaSizeIndex, setPizzaSize, typesIndex, setTypesIndex }) {

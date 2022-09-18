@@ -4,12 +4,12 @@ import {Link} from "react-router-dom";
 import CartItem from "../components/CartItem/CartItem";
 import { useDispatch } from "react-redux";
 import { clearCart } from "../redux/slices/cartSlice";
-
+import { cartSelector } from "../redux/slices/cartSlice";
 
 function Cart({pizzaSizeIndex, typesIndex}) {
-    const cartItems = useSelector(state => state.cart.cart);
-    const totalPrice = useSelector(state => state.cart.totalPrice);
-    let totalCount = cartItems.reduce((sum, item) => sum + item.count, 0);
+    const {cart} = useSelector(cartSelector);
+    const {totalPrice} = useSelector(cartSelector);
+    let totalCount = cart.reduce((sum, item) => sum + item.count, 0);
     const dispatch = useDispatch();
     
     return (
@@ -35,7 +35,7 @@ function Cart({pizzaSizeIndex, typesIndex}) {
                 </div>
                 <div class="content__items">
                     {
-                        cartItems.map(el => <CartItem typesIndex={typesIndex} pizzaSizeIndex={pizzaSizeIndex} id={el.id} title={el.title} count={el.count} price={el.price} img={el.img} types={el.types} sizes={el.sizes}/>)
+                        cart.map(el => <CartItem typesIndex={typesIndex} pizzaSizeIndex={pizzaSizeIndex} id={el.id} title={el.title} count={el.count} price={el.price} img={el.img} types={el.types} sizes={el.sizes}/>)
                     }
                 </div>
                 <div class="cart__bottom">
