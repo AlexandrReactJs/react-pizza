@@ -17,10 +17,8 @@ import { pizzaSelector } from "../redux/slices/pizzaSlice";
 function Home({ typesIndex, setTypesIndex, pizzaSizeIndex, setPizzaSize }) {
 
     const dispatch = useDispatch();
+    const {searchValue} = useSelector(filterSelector);
 
-
-    /*     SEARCH   */
-    const { searchValue } = React.useContext(searchContext);
 
     /*   PIZZAS STATE AND JSON MAP TO JSX */
 

@@ -6,7 +6,8 @@ const initialState = {
   pageSize: 4,
   totalPizzasCount: 10,
   currentPage: 1,
-  isOpenPopup: false
+  isOpenPopup: false,
+  searchValue: ''
 }
 
 export const filterSlice = createSlice({
@@ -26,11 +27,14 @@ export const filterSlice = createSlice({
     state.sortIndex = Number(action.payload.sort)
     state.currentPage = Number(action.payload.currentPage)
     state.categoryIndex = Number(action.payload.categoryActiveIndex)
+   },
+   setSearchValue (state, action) {
+    state.searchValue = action.payload;
    }
   },
 })
 
 export const filterSelector = (state) => state.filter;
-export const { setCategoryIndex, setSortIndex, setCurrentPage, setFilters, setOpenPopup } = filterSlice.actions
+export const { setCategoryIndex, setSortIndex, setCurrentPage, setFilters, setOpenPopup, setSearchValue } = filterSlice.actions
 
 export default filterSlice.reducer
