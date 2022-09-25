@@ -4,7 +4,6 @@ import Sort from "../components/Sort/Sort";
 import PizzaBlockPreloader from "../components/PizzaBlockPreloader/PizzaBlockPreloader";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 import Pagination from "../components/Pagination/Pagination";
-import { searchContext } from "../App"
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import qs from 'qs';
@@ -14,7 +13,7 @@ import PizzasCantGet from "../components/PizzasCantGet/PizzasCantGet";
 import { filterSelector } from "../redux/slices/filterSlice";
 import { pizzaSelector } from "../redux/slices/pizzaSlice";
 
-function Home({ typesIndex, setTypesIndex, pizzaSizeIndex, setPizzaSize }) {
+function Home() {
 
     const dispatch = useDispatch();
     const {searchValue} = useSelector(filterSelector);
@@ -23,7 +22,7 @@ function Home({ typesIndex, setTypesIndex, pizzaSizeIndex, setPizzaSize }) {
     /*   PIZZAS STATE AND JSON MAP TO JSX */
 
     const { items, status } = useSelector(pizzaSelector)
-    const pizzas = items.map(obj => <PizzaBlock typesIndex={typesIndex} setTypesIndex={setTypesIndex} pizzaSizeIndex={pizzaSizeIndex} setPizzaSize={setPizzaSize} key={obj.id} id={obj.id} title={obj.title} price={obj.price} img={obj.imageUrl} sizes={obj.sizes} types={obj.types} />);
+    const pizzas = items.map(obj => <PizzaBlock key={obj.id} id={obj.id} title={obj.title} price={obj.price} img={obj.imageUrl} sizes={obj.sizes} types={obj.types} />);
 
     /*    SKELETON PRELOADER    */
     const preloader = [...new Array(10)].map((_, i) => <PizzaBlockPreloader key={i} />);

@@ -26,7 +26,6 @@ export const cartSlice = createSlice({
         },
         minusPizza(state, action) {
             const foundPizza = state.cart.find(item => item.id === action.payload.id && item.types === action.payload.types && item.sizes === action.payload.sizes);
-            debugger;
             if (foundPizza && foundPizza.count > 1) {
                 foundPizza.count--;
                 state.totalPrice -= action.payload.price;

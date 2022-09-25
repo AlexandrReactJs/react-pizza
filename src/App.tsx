@@ -10,15 +10,15 @@ import Cart from "./pages/Cart";
 export const searchContext = React.createContext("");
 
 function App() {
-  const [typesIndex, setTypesIndex] = React.useState<number>(0);
-  const [pizzaSizeIndex, setPizzaSize] = React.useState<number>(0);
+  
+  
   return (
     <div className="wrapper">
         <Header />
         <div className="content">
           <Routes>
-            <Route path="/" element={<Home pizzaSizeIndex={pizzaSizeIndex} typesIndex={typesIndex} setPizzaSize={setPizzaSize} setTypesIndex={setTypesIndex}/>} />
-            <Route path="/cart" element={<Cart pizzaSizeIndex={pizzaSizeIndex} typesIndex={typesIndex} />} />
+            <Route path="/" element={<Home/>} />
+            <Route path="/cart" element={<Cart />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
 

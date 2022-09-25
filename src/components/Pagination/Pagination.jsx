@@ -13,7 +13,7 @@ const Pagination = ({pageCount}) => {
     return(
         <div className={style.Pagination}>
             {
-                pages.map(el => ( <button onClick = {() => {dispatch(setCurrentPage(el))}}>{el}</button>))
+                pages.map((el,i) => ( <button key={i} onClick = {() => {dispatch(setCurrentPage(el))}}>{el}</button>))
             }
         </div>
     )

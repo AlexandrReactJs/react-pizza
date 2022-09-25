@@ -1,18 +1,29 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addPizza } from "../../redux/slices/cartSlice";
+import { pizzaSelector } from "../../redux/slices/pizzaSlice";
+import { setPizzaSize, setPizzaType } from "../../redux/slices/pizzaSlice";
 
-function PizzaBlock({id, title, price, img, sizes, types, pizzaSizeIndex, setPizzaSize, typesIndex, setTypesIndex }) {
+function PizzaBlock({id, title, price, img, sizes, types,}) {
   const dispatch = useDispatch();
 
+  const {items} = useSelector(pizzaSelector);
+  const foundItem = items.find(el => el.id === id)
   
   const onClickSize = (index) => {
-    setPizzaSize(index)
-  }
+    dispatch(setPizzaSize({
+      id,
+      pizzaSize: index
+    }))}
+
+  
   
   
   const onClickType = (index) => {
-    setTypesIndex(index)
+    dispatch(setPizzaType({
+      id,
+      activeType: index
+    }))
   }
 
 
@@ -23,8 +34,8 @@ function PizzaBlock({id, title, price, img, sizes, types, pizzaSizeIndex, setPiz
     title,
     price,
     img,
-    sizes: sizes[pizzaSizeIndex],
-    types: typesName[typesIndex]
+    sizes: foundItem.activeSize,
+    types: typesName[foundItem.activeTypeIndex]
   }
 
   return (
@@ -39,13 +50,13 @@ function PizzaBlock({id, title, price, img, sizes, types, pizzaSizeIndex, setPiz
       <div className="pizza-block__selector">
         <ul>
           {
-            types.map(value => <li onClick={() => onClickType(value)} className={typesIndex === value ? "active" : ""}>{typesName[value]}</li>)
+            types.map((value, i) => <li onClick={() => onClickType(value)} key={i} className={foundItem.activeTypeIndex === i ? "active" : ""}>{typesName[value]}</li>)
           }
           
         </ul>
         <ul>
           {
-            sizes.map((value, i) => <li onClick={() => onClickSize(i)} className={pizzaSizeIndex === i ? "active" : ""}>{value} см.</li>)
+            sizes.map((value, i) => <li onClick={() => onClickSize(value)} key={i} className={foundItem.activeSize === value ? "active" : ""}>{value} см.</li>)
           }
 
         </ul>

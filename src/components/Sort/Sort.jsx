@@ -38,7 +38,7 @@ function Sort({onClickSort, activeIndex}) {
                     <div className="sort__popup">
                         <ul>
                             {
-                                list.map((value, i) => <li onClick={() => onClickSortItem(i)} className={activeIndex === i ? "active" : ""}>{value}</li>)
+                                list.map((value, i) => <li onClick={() => onClickSortItem(i)} key={i} className={activeIndex === i ? "active" : ""}>{value}</li>)
                             }
                         </ul>
                     </div>
