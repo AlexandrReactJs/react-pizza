@@ -9,7 +9,7 @@ import Cart from "./pages/Cart";
 
 export const searchContext = React.createContext("");
 
-function App() {
+const App: React.FC = () => {
   
   
   return (

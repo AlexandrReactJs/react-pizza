@@ -2,7 +2,12 @@ import React from "react";
 import style from "./Pagination.module.scss";
 import { useDispatch } from "react-redux";
 import { setCurrentPage } from "../../redux/slices/filterSlice";
-const Pagination = ({pageCount}) => {
+
+type PaginationProps = {
+    pageCount: number
+}
+
+const Pagination: React.FC<PaginationProps> = ({pageCount}) => {
     const dispatch = useDispatch();
 
     let pages = []

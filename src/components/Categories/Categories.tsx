@@ -2,7 +2,12 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { setCategoryIndex } from "../../redux/slices/filterSlice";
 
-function Categories({activeIndex, onClickCategory}) {
+
+type CategoriesProps = {
+    activeIndex: number
+}
+
+const Categories: React.FC<CategoriesProps> = ({activeIndex}) => {
     const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
     const dispatch = useDispatch();
     

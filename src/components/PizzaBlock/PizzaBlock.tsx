@@ -4,13 +4,22 @@ import { addPizza } from "../../redux/slices/cartSlice";
 import { pizzaSelector } from "../../redux/slices/pizzaSlice";
 import { setPizzaSize, setPizzaType } from "../../redux/slices/pizzaSlice";
 
-function PizzaBlock({id, title, price, img, sizes, types,}) {
+type PizzaBlockProps = {
+  id: number,
+  title: string,
+  price: number,
+  img: string,
+  sizes: number,
+  types: number
+}
+
+const PizzaBlock: React.FC<PizzaBlockProps> = ({id, title, price, img, sizes, types,}) => {
   const dispatch = useDispatch();
 
   const {items} = useSelector(pizzaSelector);
   const foundItem = items.find(el => el.id === id)
   
-  const onClickSize = (index) => {
+  const onClickSize = (index: number) => {
     dispatch(setPizzaSize({
       id,
       pizzaSize: index
@@ -19,7 +28,7 @@ function PizzaBlock({id, title, price, img, sizes, types,}) {
   
   
   
-  const onClickType = (index) => {
+  const onClickType = (index: number) => {
     dispatch(setPizzaType({
       id,
       activeType: index

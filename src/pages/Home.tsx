@@ -13,7 +13,10 @@ import PizzasCantGet from "../components/PizzasCantGet/PizzasCantGet";
 import { filterSelector } from "../redux/slices/filterSlice";
 import { pizzaSelector } from "../redux/slices/pizzaSlice";
 
-function Home() {
+
+
+
+const Home: React.FC = () => {
 
     const dispatch = useDispatch();
     const {searchValue} = useSelector(filterSelector);

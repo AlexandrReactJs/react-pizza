@@ -1,7 +1,7 @@
 import React from "react";
 import style from "./NotFoundBlock.module.scss";
 
-function NotFoundBlock() {
+const NotFoundBlock: React.FC = () =>{
     return <div className={style.root}>
         <span>&#128529;</span>
         <h1>
