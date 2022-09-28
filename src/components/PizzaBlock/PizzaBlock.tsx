@@ -17,7 +17,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({id, title, price, img, sizes, ty
   const dispatch = useDispatch();
 
   const {items} = useSelector(pizzaSelector);
-  const foundItem = items.find(el => el.id === id)
+  const foundItem = items.find((el: {id: number}) => el.id === id)
   
   const onClickSize = (index: number) => {
     dispatch(setPizzaSize({
@@ -59,13 +59,17 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({id, title, price, img, sizes, ty
       <div className="pizza-block__selector">
         <ul>
           {
-            types.map((value, i) => <li onClick={() => onClickType(value)} key={i} className={foundItem.activeTypeIndex === i ? "active" : ""}>{typesName[value]}</li>)
+              Array.isArray(types) ? 
+              types.map((value: number, i: number) => <li onClick={() => onClickType(value)} key={i} className={foundItem.activeTypeIndex === i ? "active" : ""}>{typesName[value]}</li>) : ''
+            
+            
           }
           
         </ul>
         <ul>
           {
-            sizes.map((value, i) => <li onClick={() => onClickSize(value)} key={i} className={foundItem.activeSize === value ? "active" : ""}>{value} см.</li>)
+            Array.isArray(sizes) ? 
+            sizes.map((value: number, i: number) => <li onClick={() => onClickSize(value)} key={i} className={foundItem.activeSize === value ? "active" : ""}>{value} см.</li>) : ''
           }
 
         </ul>

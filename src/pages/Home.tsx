@@ -14,6 +14,15 @@ import { filterSelector } from "../redux/slices/filterSlice";
 import { pizzaSelector } from "../redux/slices/pizzaSlice";
 
 
+type fetchPizzaData = {
+    id: number;
+    title: string;
+    price: number;
+    imageUrl: string;
+    sizes: number;
+    types: number;
+}
+
 
 
 const Home: React.FC = () => {
@@ -25,7 +34,7 @@ const Home: React.FC = () => {
     /*   PIZZAS STATE AND JSON MAP TO JSX */
 
     const { items, status } = useSelector(pizzaSelector)
-    const pizzas = items.map(obj => <PizzaBlock key={obj.id} id={obj.id} title={obj.title} price={obj.price} img={obj.imageUrl} sizes={obj.sizes} types={obj.types} />);
+    const pizzas = items.map((obj: fetchPizzaData) => <PizzaBlock key={obj.id} id={obj.id} title={obj.title} price={obj.price} img={obj.imageUrl} sizes={obj.sizes} types={obj.types} />);
 
     /*    SKELETON PRELOADER    */
     const preloader = [...new Array(10)].map((_, i) => <PizzaBlockPreloader key={i} />);
