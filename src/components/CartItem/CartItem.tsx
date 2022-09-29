@@ -5,10 +5,21 @@ import { plusPizza } from '../../redux/slices/cartSlice';
 import { removePizza } from '../../redux/slices/cartSlice';
 
 
-export const CartItem = ({id, title, price, count, img, types, sizes }) => {
+type cartItemProps = {
+    id: number;
+    title: string;
+    count: number;
+    price: number;
+    img: string;
+    types: string;
+    sizes: number;
+} 
+
+
+export const CartItem: React.FC<cartItemProps> = ({id, title, price, count, img, types, sizes }) => {
 
     const {cart} = useSelector(cartSelector);
-    const foundItem = cart.find(el => el.id === id && el.types === types && el.sizes === sizes);
+    const foundItem = cart.find((el: {id: number; types: string; sizes: number}) => el.id === id && el.types === types && el.sizes === sizes);
 
     const pizzaSettings = {
         id,
