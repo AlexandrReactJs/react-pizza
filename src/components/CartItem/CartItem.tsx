@@ -26,11 +26,10 @@ export const CartItem: React.FC<cartItemProps> = ({id, title, price, count, img,
         title,
         price,
         img,
-        sizes: foundItem.sizes,
-        types: foundItem.types
-      }
+        sizes,
+        types
+    }
 
-   
     const dispatch = useDispatch();
   return (
     <div className="cart__item">

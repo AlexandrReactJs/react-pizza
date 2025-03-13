@@ -12,6 +12,7 @@ import { fetchPizzas } from "../redux/slices/pizzaSlice";
 import PizzasCantGet from "../components/PizzasCantGet/PizzasCantGet";
 import { filterSelector } from "../redux/slices/filterSlice";
 import { pizzaSelector } from "../redux/slices/pizzaSlice";
+import { AppDispatch } from "../redux/types";
 
 
 type fetchPizzaData = {
@@ -19,16 +20,20 @@ type fetchPizzaData = {
     title: string;
     price: number;
     imageUrl: string;
-    sizes: number;
-    types: number;
+    sizes: number[];
+    types: number[];
+    category: number;
+    rating: number;
+    activeTypeIndex: number;
+    activeSize: number;
 }
 
 
 
 const Home: React.FC = () => {
 
-    const dispatch = useDispatch();
-    const {searchValue} = useSelector(filterSelector);
+    const dispatch = useDispatch<AppDispatch>();
+    const { searchValue } = useSelector(filterSelector);
 
 
     /*   PIZZAS STATE AND JSON MAP TO JSX */
@@ -41,16 +46,16 @@ const Home: React.FC = () => {
 
 
     /*  COTEGORY AND SORT   */
-    const {categoryIndex} = useSelector(filterSelector);
-    const {sortIndex} = useSelector(filterSelector);
+    const { categoryIndex } = useSelector(filterSelector);
+    const { sortIndex } = useSelector(filterSelector);
     const list = ['rating&order=desc', 'price&order=desc', 'price&order=asc', 'title&order=asc'];
     const selectedSortItem = list[sortIndex];
 
 
     /*   PAGINATION    */
-    let {pageSize} = useSelector(filterSelector);
-    let {totalPizzasCount} = useSelector(filterSelector);
-    let {currentPage} = useSelector(filterSelector);
+    let { pageSize } = useSelector(filterSelector);
+    let { totalPizzasCount } = useSelector(filterSelector);
+    let { currentPage } = useSelector(filterSelector);
     let pageCount = Math.ceil(totalPizzasCount / pageSize);
 
     const isMounted = React.useRef(false)
@@ -69,7 +74,7 @@ const Home: React.FC = () => {
 
     React.useEffect(() => {
         async function getPizzas() {
-            dispatch(fetchPizzas({ currentPage, searchValue, pageSize, categoryIndex, selectedSortItem }))
+            dispatch(fetchPizzas({ currentPage, searchValue, pageSize, categoryActiveIndex: categoryIndex, selectedSortItem }))
         }
 
         getPizzas();
@@ -100,18 +105,18 @@ const Home: React.FC = () => {
             </div>
             <h2 className="content__title">Все пиццы</h2>
             {
-                status === 'error' ? (<PizzasCantGet/>) :
+                status === 'error' ? (<PizzasCantGet />) :
 
-                <div className="content__items">
-                
-                {
-                    status === "loading" ? preloader : pizzas
-                }
+                    <div className="content__items">
 
-            </div>
+                        {
+                            status === "loading" ? preloader : pizzas
+                        }
+
+                    </div>
             }
-            
-            
+
+
             <Pagination pageCount={pageCount} />
         </div>
     )

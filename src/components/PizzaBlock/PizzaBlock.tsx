@@ -9,15 +9,15 @@ type PizzaBlockProps = {
   title: string,
   price: number,
   img: string,
-  sizes: number,
-  types: number
+  sizes: number[],
+  types: number[]
 }
 
 const PizzaBlock: React.FC<PizzaBlockProps> = ({id, title, price, img, sizes, types,}) => {
   const dispatch = useDispatch();
 
   const {items} = useSelector(pizzaSelector);
-  const foundItem = items.find((el: {id: number}) => el.id === id)
+  const foundItem = items.find((el: {id: number}) => el.id === id) || { activeSize: sizes[0], activeTypeIndex: 0 };
   
   const onClickSize = (index: number) => {
     dispatch(setPizzaSize({
